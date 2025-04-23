@@ -1,5 +1,5 @@
 
-```markdown
+
 # High Availability Web Application with Monitoring and Alerting
 
 This project implements a high-availability web application infrastructure using **Docker**, **HAProxy**, and **Prometheus** for monitoring and alerting. The web app is containerized, with traffic load-balanced between multiple instances to ensure high availability.
