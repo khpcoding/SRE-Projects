@@ -1,0 +1,40 @@
+- name: Update all packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Create deploy user
+  user:
+    name: deploy
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+
+- name: Disable root SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify: restart ssh
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
+- name: Allow OpenSSH
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow HTTP and HTTPS
+  ufw:
+    rule: allow
+    port: "80,443"
+    proto: tcp
+
+- name: Allow MySQL on internal network
+  ufw:
+    rule: allow
+    port: 3306
+    src: 192.168.56.0/24
+    proto: tcp
