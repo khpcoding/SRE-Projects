@@ -1,0 +1,17 @@
+- name: Deploy Web Infrastructure
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- name: Setup Web Servers
+  hosts: webservers
+  become: yes
+  roles:
+    - webserver
+
+- name: Setup Database Server
+  hosts: dbservers
+  become: yes
+  roles:
+    - database
