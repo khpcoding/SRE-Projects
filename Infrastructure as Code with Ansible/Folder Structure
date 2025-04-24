@@ -1,0 +1,24 @@
+# 📁 Folder Structure Overview
+# ============================
+# ansible-infra/
+# ├── inventory/
+# │   └── hosts.ini
+# ├── roles/
+# │   ├── common/
+# │   │   ├── tasks/
+# │   │   │   └── main.yml
+# │   ├── webserver/
+# │   │   ├── tasks/
+# │   │   │   └── main.yml
+# │   ├── database/
+# │   │   ├── tasks/
+# │   │   │   └── main.yml
+# ├── playbooks/
+# │   ├── site.yml
+# │   ├── web.yml
+# │   └── db.yml
+# ├── group_vars/
+# │   ├── webservers.yml
+# │   └── dbservers.yml
+# ├── ansible.cfg
+# └── README.md
