@@ -1,26 +1,32 @@
 
 ---
 
+## 📊 Phase 2: Monitoring with Prometheus and Grafana
 
-## 📊 Phase 2: Add Monitoring with Prometheus and Grafana
-
-In this phase, we'll integrate **Prometheus** for metrics collection and **Grafana** for data visualization. We'll also expose metrics from our web applications using a Prometheus exporter for Python.
+In this phase, we'll add **Prometheus** for metrics collection and **Grafana** for visualization. We'll also update the Flask app to expose Prometheus-compatible metrics.
 
 ---
 
-### Step 2.1: Add Metrics to the Flask App
+### ✅ Goal
 
-Update the Flask app to expose Prometheus-compatible metrics.
+- Collect real-time metrics from each application instance
+- Visualize data using Grafana dashboards
+- Monitor traffic, response counts, and availability
 
-#### Install Prometheus client
+---
 
-Add it to your `requirements.txt`:
+## 🧩 Step 2.1: Add Prometheus Metrics to Flask App
 
+Update the app to expose a `/metrics` endpoint.
+
+### 1. Update `requirements.txt`:
+
+```text
 flask
 prometheus_client
 ```
 
-#### Modify `app/app.py`
+### 2. Modify `app/app.py`:
 
 ```python
 from flask import Flask
@@ -46,13 +52,11 @@ if __name__ == "__main__":
 
 ---
 
-### Step 2.2: Update `docker-compose.yml` with Monitoring Stack
+## 🐳 Step 2.2: Add Prometheus and Grafana to Docker Compose
 
-Add **Prometheus** and **Grafana** services.
+Update your `docker-compose.yml` to include these services.
 
-#### Updated `docker-compose.yml`
-
-Add below services:
+### Add to `docker-compose.yml`:
 
 ```yaml
   prometheus:
@@ -82,9 +86,16 @@ volumes:
 
 ---
 
-### Step 2.3: Add Prometheus Configuration
+## ⚙️ Step 2.3: Create Prometheus Configuration
 
-#### Create `monitoring/prometheus.yml`
+Create the config file Prometheus will use to scrape metrics.
+
+### 1. Create folder if not already:
+```bash
+mkdir -p monitoring
+```
+
+### 2. Create `monitoring/prometheus.yml`:
 
 ```yaml
 global:
@@ -96,9 +107,11 @@ scrape_configs:
       - targets: ['app1:5000', 'app2:5000']
 ```
 
+This tells Prometheus to scrape metrics from both Flask app containers on port 5000 (where `/metrics` is exposed).
+
 ---
 
-### Step 2.4: Rebuild and Restart Services
+## 🚀 Step 2.4: Rebuild and Start All Services
 
 ```bash
 docker-compose down
@@ -107,30 +120,35 @@ docker-compose up --build -d
 
 ---
 
-### Step 2.5: Access Monitoring Dashboards
+## 🔍 Step 2.5: Access Prometheus and Grafana
 
 - **Prometheus UI:** [http://localhost:9090](http://localhost:9090)
+  - Query `app_requests_total` to see request counts
+
 - **Grafana UI:** [http://localhost:3000](http://localhost:3000)
-  - Default credentials: `admin` / `admin`
-  - Add Prometheus as a data source
-  - Import a dashboard (e.g., Prometheus 2.0 dashboard ID: `3662` from Grafana.com)
+  - Default login: `admin / admin`
+  - Add Prometheus as a data source:
+    - URL: `http://prometheus:9090`
+  - Import dashboards (e.g., use Prometheus ID `3662` from Grafana.com)
 
 ---
 
-### Step 2.6: Test Metrics Collection
+## 🧪 Step 2.6: Test the Monitoring Stack
 
-- Access your app several times at [http://localhost:8080](http://localhost:8080)
-- Go to Prometheus → `http://localhost:9090` → Search for metric: `app_requests_total`
-- You should see counts from both app instances
+1. Open [http://localhost:8080](http://localhost:8080) and refresh a few times
+2. In Prometheus, search `app_requests_total` → values should increase
+3. In Grafana, create a panel to visualize `app_requests_total`
 
 ---
 
 ## ✅ Phase 2 Complete!
 
-You’ve successfully implemented:
+You’ve now successfully:
 
-- Prometheus metrics in your Flask app
-- A Prometheus service scraping metrics from all app containers
-- Grafana dashboard to visualize app metrics
+- Exposed metrics from a Flask app
+- Collected them with Prometheus
+- Visualized them in Grafana
+
+Your system is now **observable** and ready for **alerting**, which we’ll cover in the next phase.
 
 ---
