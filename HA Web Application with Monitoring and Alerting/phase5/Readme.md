@@ -1,7 +1,6 @@
 
 ---
 
-```markdown
 ## 📈 Phase 5: SLO Dashboards – SLIs, SLOs & Error Budgets
 
 In this phase, we define and visualize key **SRE reliability metrics**: SLIs, SLOs, and Error Budgets. These help quantify the reliability of your service and drive incident management, prioritization, and engineering velocity.
