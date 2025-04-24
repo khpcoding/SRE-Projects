@@ -139,6 +139,10 @@ docker-compose up --build -d
 2. In Prometheus, search `app_requests_total` → values should increase
 3. In Grafana, create a panel to visualize `app_requests_total`
 
+
+![image](https://github.com/user-attachments/assets/415a26ce-da6e-4716-a1c9-01ca82e1b953)
+
+
 ---
 
 ## ✅ Phase 2 Complete!
