@@ -16,7 +16,7 @@ Add it to your `requirements.txt`:
 ```txt
 flask
 prometheus_client
-
+```
 
 Modify app/app.py
 ```bash
